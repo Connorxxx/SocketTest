@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="v"
+            type="com.connor.sockettest.ui.ServerFragment" />
+
+        <variable
+            name="m"
+            type="com.connor.sockettest.model.ChatModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.ServerFragment">
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            click="@{v}"
+            android:layout_marginEnd="16dp"
+            android:text="Go to Client"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_open" />
+
+        <TextView
+            android:id="@+id/tv_ip"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="IP Address" />
+
+        <Button
+            android:id="@+id/btn_open"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            click="@{v}"
+            android:text="Opened Server"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_ip"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ip" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            click="@{v}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:stackFromEnd="true"
+            tools:listitem="@layout/item_msg_right"
+            app:layout_constraintBottom_toTopOf="@+id/llInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_open" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Input Message"
+                    android:maxHeight="120dp"
+                    android:minHeight="50dp"
+                    android:text="@={m.input}"
+                    android:textSize="12dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_send"
+                click="@{v}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:enabled="@{m.sendEnable}"
+                android:text="SEND"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPassword"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
