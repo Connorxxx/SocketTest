@@ -48,7 +48,7 @@ class ClientFragment : EngineFragment<FragmentClientBinding>(R.layout.fragment_c
             }
             binding.btnConnect -> {
                 // if (model.getIP().isEmpty()) showMsg("Please input IP")
-                val ip = binding.etIpAddress.text.toString()
+                val ip = binding.etIpAddress.text.toString().trim()
                 if (ip.isEmpty()) showMsg("Please input IP") else {
                     connectSocket = if (connectSocket) {
                         SocketClient.closeConnect(); false
@@ -64,7 +64,7 @@ class ClientFragment : EngineFragment<FragmentClientBinding>(R.layout.fragment_c
                 if (!connectSocket) showMsg("please connect server first") else {
                     model.sendToServer()
                     binding.rv.addModels(model.getMessages(2))
-                    Log.d(TAG, "onClickSend: ${model.getMessages(2)}")
+                    Log.d(TAG, "onClickSend: ${model.sendToServer()}")
                     binding.rv.scrollToPosition(binding.rv.adapter!!.itemCount - 1)
                 }
             }
@@ -72,11 +72,12 @@ class ClientFragment : EngineFragment<FragmentClientBinding>(R.layout.fragment_c
     }
 
     override fun receiveServerMsg(msg: String) {
-        binding.rv.addModels(model.getMessages(1))
+        binding.rv.addModels(model.getMsg(1, msg))
+        binding.rv.scrollToPosition(binding.rv.adapter!!.itemCount - 1)
     }
 
     override fun otherMsg(msg: String) {
-        Log.d(TAG, msg)
+        Log.d(TAG, "receiveServerMsg: $msg")
     }
 
     private fun showMsg(msg: String) = Toast.makeText(activity?.applicationContext, msg, Toast.LENGTH_SHORT).show()

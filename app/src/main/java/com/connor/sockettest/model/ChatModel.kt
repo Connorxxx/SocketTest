@@ -1,10 +1,8 @@
 package com.connor.sockettest.model
 
-import android.content.Context
 import android.util.Log
 import androidx.databinding.BaseObservable
 import com.connor.sockettest.client.SocketClient
-import com.connor.sockettest.server.ServerCallback
 import com.connor.sockettest.server.SocketServer
 
 class ChatModel : BaseObservable() {
@@ -34,15 +32,15 @@ class ChatModel : BaseObservable() {
         SocketClient.sendToServer(input)
         Log.d(TAG, "sendToClient: $input")
     }
-    
-    fun ip() {
-        Log.d(TAG, "ip: $ip")
-    }
 
     fun getMessages(userId: Int): List<ChatMessage> {
         val messages = listOf(ChatMessage(input, userId))
         input = ""
         return messages
+    }
+
+    fun getMsg(userId: Int, msg: String): List<ChatMessage> {
+        return listOf(ChatMessage(msg, userId))
     }
 
     fun fetchHistory(): MutableList<ChatMessage> {

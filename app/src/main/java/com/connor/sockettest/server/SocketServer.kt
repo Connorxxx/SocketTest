@@ -3,10 +3,7 @@ package com.connor.sockettest.server
 import android.util.Log
 import com.connor.sockettest.client.ClientCallback
 import com.connor.sockettest.client.SocketClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.IOException
 import java.io.OutputStream
 import java.lang.NullPointerException
@@ -85,8 +82,11 @@ object SocketServer {
             while (inputStream.read(buffer).also { len = it } != -1) {
                 receiveStr += String(buffer, 0, len, Charsets.UTF_8)
                 if (len < 1024) {
-                    callback.receiveClientMsg(true, receiveStr)
-                    receiveStr = ""
+                    withContext(Dispatchers.Main) {
+                        callback.receiveClientMsg(true, receiveStr)
+                        receiveStr = ""
+                    }
+
                 }
             }
         }

@@ -79,7 +79,8 @@ class ServerFragment : EngineFragment<FragmentServerBinding>(R.layout.fragment_s
     private fun showMsg(msg: String) = Toast.makeText(activity?.applicationContext, msg, Toast.LENGTH_SHORT).show()
 
     override fun receiveClientMsg(success: Boolean, msg: String) {
-        binding.rv.addModels(model.getMessages(2))
+        binding.rv.addModels(model.getMsg(2, msg))
+        binding.rv.scrollToPosition(binding.rv.adapter!!.itemCount - 1)
     }
 
     override fun otherMsg(msg: String) {
